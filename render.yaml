@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: auditcopilot
+    runtime: node
+    plan: free
+    buildCommand: npm ci
+    startCommand: npm start
+    healthCheckPath: /health
+    envVars:
+      - key: MAGICA_API_KEY
+        sync: false
+      - key: MAGICA_LLM_MODEL
+        value: '~google/gemini-flash-latest'
+      - key: TRUST_PROXY
+        value: '1'

@@ -16,7 +16,7 @@ Copy-Item .env.example .env
 Edit `.env` and replace `YOUR_API_KEY` with your key from Magica Settings > API Keys. The example selects the live catalog alias `~google/gemini-flash-latest`; override `MAGICA_LLM_MODEL` with another supported language-model ID if needed. Then install dependencies and start the server:
 
 ```powershell
-npm install express dotenv cors
+npm install
 npm start
 ```
 
@@ -48,8 +48,12 @@ Invoke-RestMethod -Method Post -Uri http://localhost:3000/audit-assistant -Conte
 
 The server calls `https://inference.magica.com/v1/chat/completions` and returns the model's response under `result`, along with the selected model ID and token usage when available. The response asks for these sections: Risk, Audit Test Procedure, and Expected Evidence. Controls are limited to 12,000 characters.
 
-Invalid JSON or a missing/empty control returns HTTP 400. Oversized controls return HTTP 413. An upstream timeout returns HTTP 504, and connection errors return HTTP 502. Other non-success responses include Magica's status and response body. The API key and control text are not logged.
+Invalid JSON or a missing/empty control returns HTTP 400. Oversized controls return HTTP 413. Requests are limited to 10 per client IP per 15 minutes. An upstream timeout returns HTTP 504, and connection errors return HTTP 502. Other non-success responses include Magica's status and response body. The API key and control text are not logged.
 
 ## Security
 
-`.env` is excluded by `.gitignore`. Never commit or share your real API key. CORS is enabled for all origins for local testing; restrict allowed origins before exposing this service publicly.
+`.env` and `.env.local` are excluded by `.gitignore`. Never commit or share your real API key. The browser UI and API use the same origin; cross-origin access is not enabled.
+
+## Deploy to Render
+
+The included `render.yaml` defines a free Node web service and prompts for `MAGICA_API_KEY` as a secret during initial setup. Push the repository to GitHub, then in Render choose **New > Blueprint**, connect `georgejalloh214-source/AuditCopilot`, select the `main` branch, and provide the Magica key when prompted. Render builds with `npm ci`, starts with `npm start`, and checks `/health`. Free instances may spin down when idle.
