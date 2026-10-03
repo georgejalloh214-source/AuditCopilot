@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f3f5f2">
+    <title>AuditCopilot | Control analysis</title>
+    <link rel="stylesheet" href="/styles.css">
+    <script src="/app.js" defer></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="/" aria-label="AuditCopilot home">
+        <span class="brand-mark" aria-hidden="true">A</span>
+        <span>AuditCopilot</span>
+      </a>
+      <div class="topbar-meta">
+        <span class="connection-dot" aria-hidden="true"></span>
+        <span>Local workspace</span>
+      </div>
+    </header>
+
+    <main class="workspace">
+      <section class="intro" aria-labelledby="page-title">
+        <p class="eyebrow">IT AUDIT / CONTROL WORKPAPER</p>
+        <div class="intro-row">
+          <div>
+            <h1 id="page-title">Control analysis</h1>
+            <p class="intro-copy">Turn a control description into a focused starting point for audit planning.</p>
+          </div>
+          <span class="model-badge">MAGICA AI</span>
+        </div>
+      </section>
+
+      <div class="analysis-layout">
+        <section class="input-panel" aria-labelledby="control-heading">
+          <div class="section-heading">
+            <span class="step-number">01</span>
+            <div>
+              <h2 id="control-heading">Control description</h2>
+              <p>Describe the control as it is designed to operate.</p>
+            </div>
+          </div>
+
+          <form id="audit-form">
+            <label for="control">Control statement</label>
+            <textarea
+              id="control"
+              name="control"
+              maxlength="12000"
+              placeholder="Example: User access reviews are performed quarterly by management."
+              required
+            ></textarea>
+            <div class="field-meta">
+              <button class="text-button" id="sample-control" type="button">Use sample control</button>
+              <span id="character-count">0 / 12,000</span>
+            </div>
+            <p class="form-error" id="form-error" role="alert" hidden></p>
+            <button class="submit-button" id="submit-button" type="submit">
+              <span>Generate workpaper draft</span>
+              <span aria-hidden="true">&#8594;</span>
+            </button>
+            <p class="privacy-note">Control text is sent to Magica to generate this draft. Review all output before use.</p>
+          </form>
+        </section>
+
+        <section class="results-panel" aria-labelledby="results-heading" aria-busy="false">
+          <div class="results-header">
+            <div class="section-heading">
+              <span class="step-number">02</span>
+              <div>
+                <h2 id="results-heading">Audit planning draft</h2>
+                <p id="results-status">Your analysis will appear here.</p>
+              </div>
+            </div>
+            <span class="draft-label">AI-GENERATED</span>
+          </div>
+
+          <div class="empty-state" id="empty-state">
+            <span class="empty-rule" aria-hidden="true"></span>
+            <p>Start with a control statement.</p>
+            <span>Risk, test procedure, and evidence suggestions will be organized here.</span>
+          </div>
+
+          <div class="result-sections" id="result-sections" hidden>
+            <article class="result-row">
+              <span class="result-index">A</span>
+              <div>
+                <h3>Risk</h3>
+                <p id="risk-result"></p>
+              </div>
+            </article>
+            <article class="result-row">
+              <span class="result-index">B</span>
+              <div>
+                <h3>Audit Test Procedure</h3>
+                <p id="test-result"></p>
+              </div>
+            </article>
+            <article class="result-row">
+              <span class="result-index">C</span>
+              <div>
+                <h3>Expected Evidence</h3>
+                <p id="evidence-result"></p>
+              </div>
+            </article>
+            <details class="full-response">
+              <summary>View full model response</summary>
+              <pre id="full-response"></pre>
+            </details>
+            <div class="response-meta" id="response-meta"></div>
+          </div>
+        </section>
+      </div>
+
+      <footer class="page-footer">
+        <span>AuditCopilot</span>
+        <span>AI output is a planning aid, not an audit conclusion.</span>
+      </footer>
+    </main>
+  </body>
+</html>
