@@ -50,6 +50,21 @@ The server calls `https://inference.magica.com/v1/chat/completions` and returns 
 
 Invalid JSON or a missing/empty control returns HTTP 400. Oversized controls return HTTP 413. Requests are limited to 10 per client IP per 15 minutes. An upstream timeout returns HTTP 504, and connection errors return HTTP 502. Other non-success responses include Magica's status and response body. The API key and control text are not logged.
 
+## Reusable Magica service
+
+`services/magicaService.js` exports `askMagica(prompt, options)`. It loads and validates `MAGICA_API_KEY`, sends a chat-completions request, and returns `{ text, model, usage }`. Options include `systemPrompt`, `model`, `maxTokens`, `temperature`, and `timeoutMs`. HTTP 429 responses include a `retryAfter` value when Magica provides one.
+
+```js
+const { askMagica } = require('./services/magicaService');
+
+const result = await askMagica('Create an audit test procedure');
+console.log(result.text, result.model, result.usage);
+```
+
+Starter functions are in `templates/`: `draftAuditWorkpaper`, `generateInterviewPrep`, `reviewResume`, and `writeSong`. They return the same `{ text, model, usage }` shape. Songwriting prompts request original lyrics rather than imitation of a specific artist.
+
+Run `npm test` for mocked service tests and `npm run check` to syntax-check all project JavaScript files.
+
 ## Security
 
 `.env` and `.env.local` are excluded by `.gitignore`. Never commit or share your real API key. The browser UI and API use the same origin; cross-origin access is not enabled.

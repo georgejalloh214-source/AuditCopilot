@@ -6,7 +6,8 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "check": "node --check server.js"
+    "check": "node --check server.js && node --check public/app.js && node --check services/magicaService.js && node --check templates/audit-template.js && node --check templates/interview-template.js && node --check templates/resume-template.js && node --check templates/songwriting-template.js && node --check test/magicaService.test.js && node --check test/templates.test.js",
+    "test": "node --test"
   },
   "engines": {
     "node": ">=22"
